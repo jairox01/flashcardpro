@@ -52,6 +52,6 @@ class StudyDeck extends Component
 
     public function render()
     {
-        return view('livewire.study-deck');
+        return view('livewire.study-deck')->layout('layouts.app');
     }
 }
