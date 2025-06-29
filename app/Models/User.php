@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Flashcard;
 
 class User extends Authenticatable
 {
@@ -49,5 +49,10 @@ class User extends Authenticatable
     public function decks()
     {
         return $this->hasMany(Deck::class);
+    }
+
+    public function flashcards()
+    {
+        return $this->hasMany(Flashcard::class);
     }
 }

@@ -14,10 +14,16 @@ class Flashcard extends Model
         'answer',
         'is_public',
         'deck_id',
+        'user_id'
     ];
 
     public function deck()
     {
         return $this->belongsTo(Deck::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
     }
 }

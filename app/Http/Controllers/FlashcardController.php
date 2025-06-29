@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Flashcard;
 use Illuminate\Http\Request;
 
 class FlashcardController extends Controller
@@ -30,7 +30,9 @@ class FlashcardController extends Controller
     public function store(StoreFlashcardRequest $request)
     {
         $validated = $request->validated();
-        auth()->user()->flashcards()->create($validated);
+        $validated['user_id'] = auth()->id();
+
+        Flashcard::create($validated);
 
         return redirect()->route('flashcards.index')->with('success', 'Flashcard created.');
     }
