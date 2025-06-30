@@ -21,7 +21,7 @@
 - Tailwind CSS
 - MySQL (Dockerized)
 - Eloquent ORM
-- PHPUnit
+- Pest (and PHPUnit)
 
 ---
 
@@ -61,7 +61,7 @@ cp .env.example .env
 6. **Run database migrations and seeders:**
 
 ```bash
-./vendor/bin/sail artisan migrate --seed
+./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
 7. **Visit the application:**
@@ -78,35 +78,35 @@ http://localhost
 
 - User registration and login
 - Session-based protected routes
+- API token generation using Laravel Sanctum
 
 ### 🧠 Flashcard and Deck Management
 
-- CRUD for decks and flashcards
+- Full CRUD for decks and flashcards
 - Deck → Flashcard (One-to-Many)
 - Validation with FormRequests
-- Authorization using Laravel Policies
+- Authorization with Laravel Policies
 
 ### 📚 Study Mode (Livewire)
 
 - Study flashcards deck-by-deck
-- Flip-style interface to show/hide answers
-- Built with Livewire + Tailwind CSS
+- Flip-style UI to show/hide answers
+- Livewire reactivity without full-page reloads
 
 ### 🔓 Public API (Token Protected)
 
-- Access flashcards via API (GET)
-- Custom middleware for API key authentication
-- API Resources for JSON formatting
+- `/api/token`: generate auth token
+- `/api/public/decks`: list public decks
+- `/api/public/decks/{deck}/flashcards`: list public flashcards for a deck
+- Middleware: custom logger for public API access
 
 ### 🧪 Testing
 
-- PHPUnit test suite
-- Unit tests and feature tests
-- Coverage includes:
-  - Authentication
-  - Deck/card CRUD
-  - Study session logic
-  - API authentication
+- Pest-powered suite with over 95% feature coverage:
+  - API token validation
+  - Authenticated and unauthenticated API access
+  - Study mode behavior
+  - Deck & flashcard ownership and access control
 
 ---
 
@@ -141,25 +141,24 @@ resources/
 
 ## 🧠 Architectural Decisions
 
-- **Livewire** was used for study interactions to reduce frontend complexity while maintaining reactivity.
-- A **custom middleware** handles token-based API access.
-- Business logic (e.g., study flow) was extracted into a **dedicated service class**.
-- **FormRequests** and **Policies** enforce security and validation.
-- **Sail** simplifies the local setup with Docker.
+- **Livewire** used to reduce frontend complexity and support dynamic interactivity
+- **Sanctum** + custom middleware for API token access
+- **FormRequests** enforce validation logic cleanly
+- **Policy-based authorization** for all flashcard/deck actions
+- Structured seeders and factories ensure predictable test data
+- Docker-first setup via Sail
 
 ---
 
-## 🔐 AI Tool Usage Disclosure
+## 🤖 AI Tool Usage Disclosure
 
-AI-assisted tools were used responsibly during development:
+| Tool             | Area                     | Purpose                                          |
+|------------------|--------------------------|--------------------------------------------------|
+| ChatGPT          | Initial scaffolding       | Route structure, seeder examples, Livewire logic |
+| GitHub Copilot   | Boilerplate generation    | Factories, form requests, test shells            |
+| ChatGPT          | Testing + documentation   | Pest coverage, README.md formatting              |
 
-| Tool             | Context                     | Area                             | Purpose                           |
-|------------------|------------------------------|-----------------------------------|------------------------------------|
-| ChatGPT          | Initial setup                | Docker config, `.env.example`     | Speed up boilerplate configuration |
-| GitHub Copilot   | Controller logic & migrations| Decks, Cards, API, Tests          | Autocomplete repetitive patterns   |
-| ChatGPT          | Validation & testing         | FormRequests, feature tests       | Ensure best practices              |
-
-All AI-assisted code was reviewed, validated, and tested before being committed.
+All AI-assisted code was manually verified and adapted to Laravel 11 best practices.
 
 ---
 
@@ -169,7 +168,7 @@ All AI-assisted code was reviewed, validated, and tested before being committed.
 - Deck listing
 - Flashcard creation/editing
 - Study mode (Livewire)
-- API response (e.g., Postman view)
+- API response (e.g., curl/Postman)
 
 ---
 
