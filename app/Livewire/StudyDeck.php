@@ -1,7 +1,6 @@
 <?php
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
-use App\Models\Deck;
 use Livewire\Component;
 
 class StudyDeck extends Component
@@ -11,6 +10,8 @@ class StudyDeck extends Component
     public $currentCard;
     public $showAnswer = false;
     public $remainingCards = [];
+
+    public $statusMessage;
 
     public function mount()
     {
@@ -24,6 +25,14 @@ class StudyDeck extends Component
 
     public function selectDeck()
     {
+        if (empty($this->selectedDeckId)) {
+            $this->currentCard = null;
+            $this->remainingCards = [];
+            $this->showAnswer = false;
+            $this->statusMessage = 'No deck selected.';
+            return;
+        }
+
         $deck = $this->decks->firstWhere('id', $this->selectedDeckId);
 
         if (!$deck || $deck->user_id !== auth()->id()) {
@@ -32,6 +41,7 @@ class StudyDeck extends Component
 
         $this->remainingCards = $deck->flashcards->shuffle()->all();
         $this->nextCard();
+        $this->statusMessage = null;
     }
 
     public function nextCard()
@@ -45,9 +55,14 @@ class StudyDeck extends Component
         }
     }
 
-    public function showAnswer()
+    public function revealAnswer()
     {
         $this->showAnswer = true;
+    }
+
+    public function restartDeck()
+    {
+        $this->selectDeck();
     }
 
     public function render()

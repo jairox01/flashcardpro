@@ -1,6 +1,7 @@
 # 📘 FlashcardPro
 
-**FlashcardPro** is a Laravel + Livewire application that allows users to create, manage, and study flashcards grouped into decks. This project is a technical assessment submission for the Laravel Developer position at **Awesome Motive**.
+**FlashcardPro** is a Laravel + Livewire application that allows users to create, manage, and study flashcards grouped into decks.  
+This project was developed as part of a technical assessment for the Laravel Developer position at **Awesome Motive**.
 
 ---
 
@@ -8,20 +9,20 @@
 
 **Jairo Mendieta**  
 📧 j4iro.a@gmail.com  
-🔗 GitHub: [https://github.com/jairox01](https://github.com/jairox01)
+🔗 [GitHub Profile](https://github.com/jairox01)
 
 ---
 
 ## ⚙️ Tech Stack
 
-- Laravel 11
+- Laravel 11.x
 - PHP 8.3
 - Laravel Sail (Docker)
 - Laravel Livewire
 - Tailwind CSS
 - MySQL (Dockerized)
 - Eloquent ORM
-- Pest (and PHPUnit)
+- Pest & PHPUnit
 
 ---
 
@@ -34,13 +35,13 @@ git clone git@github-personal:jairox01/flashcardpro.git
 cd flashcardpro
 ```
 
-2. **Copy the environment file:**
+2. **Copy the environment configuration:**
 
 ```bash
 cp .env.example .env
 ```
 
-3. **Start the environment using Laravel Sail:**
+3. **Start the development environment using Laravel Sail:**
 
 ```bash
 ./vendor/bin/sail up -d
@@ -58,13 +59,13 @@ cp .env.example .env
 ./vendor/bin/sail artisan key:generate
 ```
 
-6. **Run database migrations and seeders:**
+6. **Run migrations and seeders:**
 
 ```bash
 ./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
-7. **Visit the application:**
+7. **Access the application:**
 
 ```
 http://localhost
@@ -72,45 +73,45 @@ http://localhost
 
 ---
 
-## ✅ Implemented Features
+## ✅ Features Implemented
 
 ### 🔐 Authentication
 
-- User registration and login
-- Session-based protected routes
-- API token generation using Laravel Sanctum
+- User registration & login
+- Auth-protected routes and features
+- API token generation with Laravel Sanctum
 
-### 🧠 Flashcard and Deck Management
+### 🧠 Flashcards & Deck Management
 
 - Full CRUD for decks and flashcards
 - Deck → Flashcard (One-to-Many)
-- Validation with FormRequests
-- Authorization with Laravel Policies
+- Form validation using Form Requests
+- Access control via Laravel Policies
 
 ### 📚 Study Mode (Livewire)
 
-- Study flashcards deck-by-deck
-- Flip-style UI to show/hide answers
-- Livewire reactivity without full-page reloads
+- Study cards from selected deck
+- Flip card-style UI to show answers
+- Smooth reactivity via Livewire (no full-page reloads)
 
-### 🔓 Public API (Token Protected)
+### 🔓 Public API (Token-Protected)
 
-- `/api/token`: generate auth token
-- `/api/public/decks`: list public decks
-- `/api/public/decks/{deck}/flashcards`: list public flashcards for a deck
-- Middleware: custom logger for public API access
+- `POST /api/token`: generate API token
+- `GET /api/public/decks`: retrieve public decks
+- `GET /api/public/decks/{deck}/flashcards`: retrieve public flashcards by deck
+- Custom middleware for public API request logging
 
 ### 🧪 Testing
 
-- Pest-powered suite with over 95% feature coverage:
-  - API token validation
-  - Authenticated and unauthenticated API access
-  - Study mode behavior
-  - Deck & flashcard ownership and access control
+- Pest-based test suite with over 95% feature coverage:
+  - Token-based API auth
+  - Authenticated/unauthenticated flows
+  - Study deck logic
+  - Deck & flashcard access control
 
 ---
 
-## 🧪 Run Tests
+## 🧪 Running Tests
 
 ```bash
 ./vendor/bin/sail test
@@ -118,7 +119,7 @@ http://localhost
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure (Simplified)
 
 ```
 app/
@@ -139,48 +140,48 @@ resources/
 
 ---
 
-## 🧠 Architectural Decisions
+## 🧠 Architectural Notes
 
-- **Livewire** used to reduce frontend complexity and support dynamic interactivity
-- **Sanctum** + custom middleware for API token access
-- **FormRequests** enforce validation logic cleanly
-- **Policy-based authorization** for all flashcard/deck actions
-- Structured seeders and factories ensure predictable test data
-- Docker-first setup via Sail
+- **Livewire** provides dynamic behavior with minimal JS
+- **Sanctum + middleware** ensure protected API access
+- **Form Requests** encapsulate all validation logic
+- **Authorization Policies** protect user-specific data
+- **Seeders & factories** provide consistent test/demo data
+- Docker-based environment via **Laravel Sail**
 
 ---
 
 ## 🤖 AI Tool Usage Disclosure
 
-| Tool             | Area                     | Purpose                                          |
-|------------------|--------------------------|--------------------------------------------------|
-| ChatGPT          | Initial scaffolding       | Route structure, seeder examples, Livewire logic |
-| GitHub Copilot   | Boilerplate generation    | Factories, form requests, test shells            |
-| ChatGPT          | Testing + documentation   | Pest coverage, README.md formatting              |
+| Tool           | Area                     | Purpose                                           |
+|----------------|--------------------------|---------------------------------------------------|
+| ChatGPT        | Architecture, logic       | Route structure, seeders, Livewire scaffolding    |
+| GitHub Copilot | Boilerplate               | Factories, requests, test structure               |
+| ChatGPT        | Tests & docs              | Pest specs, README.md formatting & refinement     |
 
-All AI-assisted code was manually verified and adapted to Laravel 11 best practices.
+> All AI-assisted code was reviewed, tested, and aligned with Laravel 11 best practices.
 
 ---
 
 ## 🖼️ Screenshots (To Be Attached)
 
-- Login and registration
-- Deck listing
-- Flashcard creation/editing
-- Study mode (Livewire)
-- API response (e.g., curl/Postman)
+- 🔐 Login & Registration
+- 🗂️ Deck Listing
+- 📝 Flashcard Create/Edit
+- 🎓 Study Mode (Livewire)
+- 🌐 API Response (curl/Postman)
 
 ---
 
 ## 📌 Laravel & PHP Versions
 
-- **PHP:** 8.3
+- **PHP:** 8.3  
 - **Laravel:** 11.x
 
 ---
 
-## 📎 Environment
+## 📎 Development Environment
 
 - Laravel Sail (Docker)
-- MySQL container via Sail
-- `.env.example` file included
+- MySQL (via Docker)
+- `.env.example` included for configuration

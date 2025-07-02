@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Flashcard;
 use Illuminate\Http\Request;
+use App\Models\Deck;
+use App\Http\Requests\StoreFlashcardRequest;
 
 class FlashcardController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -18,23 +23,39 @@ class FlashcardController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $decks = auth()->user()->decks()->pluck('name', 'id');
+        $this->authorize('create', Flashcard::class);
+        $decks = auth()->user()->decks()->orderBy('name')->get();
         return view('flashcards.create', compact('decks'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFlashcardRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-        $validated['user_id'] = auth()->id();
+        $this->authorize('create', \App\Models\Flashcard::class);
 
-        Flashcard::create($validated);
+        $validated = $request->validate([
+            'deck_id' => ['required', 'exists:decks,id'],
+            'question' => ['required', 'string', 'max:255'],
+            'answer' => ['required', 'string'],
+            'is_public' => ['nullable', 'boolean'],
+        ]);
 
-        return redirect()->route('flashcards.index')->with('success', 'Flashcard created.');
+        $deck = Deck::where('id', $validated['deck_id'])
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        $deck->flashcards()->create([
+            'question' => $validated['question'],
+            'answer' => $validated['answer'],
+            'is_public' => boolval($validated['is_public'] ?? false),
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('decks.show', $deck)->with('success', 'Flashcard created!');
     }
 
     /**
@@ -51,8 +72,7 @@ class FlashcardController extends Controller
     public function edit(Flashcard $flashcard)
     {
         $this->authorize('update', $flashcard);
-        $decks = auth()->user()->decks()->pluck('name', 'id');
-
+        $decks = auth()->user()->decks()->orderBy('name')->get();
         return view('flashcards.edit', compact('flashcard', 'decks'));
     }
 

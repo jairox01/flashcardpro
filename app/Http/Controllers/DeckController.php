@@ -5,15 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Deck;
 use App\Http\Requests\StoreDeckRequest;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DeckController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $decks = auth()->user()->decks()->paginate(10);
+        $decks = Deck::withCount('flashcards')
+            ->where('user_id', auth()->id())
+            ->paginate(9);
+
         return view('decks.index', compact('decks'));
     }
 
@@ -22,6 +27,7 @@ class DeckController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Deck::class);
         return view('decks.create');
     }
 
@@ -30,7 +36,11 @@ class DeckController extends Controller
      */
     public function store(StoreDeckRequest $request)
     {
-        $deck = auth()->user()->decks()->create($request->validated());
+        $validated = $request->validated();
+        $deck = auth()->user()->decks()->create([
+            'name' => $validated['name'],
+            'is_public' => boolval($validated['is_public'] ?? false),
+        ]);
         return redirect()->route('decks.index')->with('success', 'Deck created.');
     }
 
@@ -58,7 +68,12 @@ class DeckController extends Controller
     public function update(StoreDeckRequest $request, Deck $deck)
     {
         $this->authorize('update', $deck);
-        $deck->update($request->validated());
+        $validated = $request->validated();
+
+        $deck->update([
+            'name' => $validated['name'],
+            'is_public' => boolval($request->input('is_public', false)),
+        ]);
         return redirect()->route('decks.index')->with('success', 'Deck updated.');
     }
 

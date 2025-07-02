@@ -29,7 +29,7 @@ class FlashcardPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class FlashcardPolicy
      */
     public function update(User $user, Flashcard $flashcard): bool
     {
-        return false;
+        return $user->id === $flashcard->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class FlashcardPolicy
      */
     public function delete(User $user, Flashcard $flashcard): bool
     {
-        return false;
+        return $user->id === $flashcard->user_id;
     }
 
     /**

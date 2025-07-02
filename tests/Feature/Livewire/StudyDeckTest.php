@@ -1,10 +1,11 @@
 <?php
-use App\Http\Livewire\StudyDeck;
-use App\Models\User;
+
+use App\Livewire\StudyDeck;
 use App\Models\Deck;
 use App\Models\Flashcard;
-use Livewire\Livewire;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 

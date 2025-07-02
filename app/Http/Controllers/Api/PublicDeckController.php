@@ -11,16 +11,19 @@ class PublicDeckController extends Controller
 {
     public function index()
     {
-        $decks = Deck::where('is_public', true)->get();
-        return DeckResource::collection($decks);
+        return response()->json([
+            'data' => Deck::where('is_public', true)->get()
+        ]);
     }
 
     public function flashcards(Deck $deck)
     {
         if (! $deck->is_public) {
-            abort(403, 'This deck is private.');
+            abort(403, 'Deck is not public.');
         }
 
-        return FlashcardResource::collection($deck->flashcards);
+        return response()->json([
+            'data' => $deck->flashcards()->where('is_public', true)->get()
+        ]);
     }
 }

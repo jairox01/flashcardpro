@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Deck extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'user_id',
+        'is_public',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

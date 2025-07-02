@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Deck;
 use App\Models\Flashcard;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,9 +21,10 @@ class FlashcardFactory extends Factory
     {
         return [
             'question' => $this->faker->sentence(),
-            'answer' => $this->faker->paragraph(1),
-            'deck_id' => \App\Models\Deck::factory(),
-            'is_public' => $this->faker->boolean(30), // 30% públicas
+            'answer' => $this->faker->paragraph(),
+            'deck_id' => Deck::factory(),
+            'user_id' => User::factory(),
+            'is_public' => $this->faker->boolean(30),
         ];
     }
 }
