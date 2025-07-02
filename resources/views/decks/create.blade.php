@@ -23,9 +23,11 @@
             </div>
 
             <div class="flex items-center">
+                <input type="hidden" name="is_public" value="0">
                 <input type="checkbox" name="is_public" id="is_public"
                        class="h-4 w-4 text-blue-600 border-gray-300 rounded"
-                    {{ old('is_public') ? 'checked' : '' }}>
+                       value="1"
+                    {{ old('is_public', $deck->is_public ?? false) ? 'checked' : '' }}>
                 <label for="is_public" class="ml-2 block text-sm text-gray-700">
                     Make this deck public
                 </label>
