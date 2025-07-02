@@ -163,13 +163,20 @@ resources/
 
 ---
 
-## 🖼️ Screenshots (To Be Attached)
+## 🖼️ Screenshots
 
-- 🔐 Login & Registration
-- 🗂️ Deck Listing
-- 📝 Flashcard Create/Edit
-- 🎓 Study Mode (Livewire)
-- 🌐 API Response (curl/Postman)
+### 🔐 Login & Registration
+![Login Screenshot](public/screenshots/login.png)
+
+### 📚 Deck Listing
+![Deck Listing](public/screenshots/decks.png)
+
+### 🧠 Study Mode
+![Study Mode](public/screenshots/study.png)
+![Study Detail](public/screenshots/study-1.png)
+
+### 📲 API Test via Postman
+![API Postman](public/screenshots/postman.png)
 
 ---
 
